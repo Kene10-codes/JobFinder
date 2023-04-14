@@ -10,16 +10,17 @@ import {
 import {useRouter} from 'expo-router';
 
 import styles from './welcome.style';
-import {icons, images} from '../../../constants';
+import {SIZES, icons, images} from '../../../constants';
 
 const jobTypes = ['Full-time', 'part-time', 'Contract'];
 
 const Welcome = () => {
-  const [text, setText] = useState ();
+  const [activeJobType, setActiveJobType] = useState ();
+  const router = useRouter ();
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.userName}>Kenechukwu Nwobodo</Text>
+        <Text style={styles.userName}>Nwobodo Kenechukwu </Text>
         <Text style={styles.welcomeMessage}>Find your perfect job here...</Text>
       </View>
 
@@ -44,7 +45,23 @@ const Welcome = () => {
       </View>
 
       <View style={styles.tabsContainer}>
-        <FlatList />
+        <FlatList
+          data={jobTypes}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.tab (activeJobType, item)}
+              onPress={() => {
+                setActiveJobType (item);
+                router.push (`/search/${item}`);
+              }}
+            >
+              <Text style={styles.tabText (activeJobType, item)}>{item}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={item => item}
+          contentContainerStyle={{columnGap: SIZES.small}}
+          horizontal
+        />
       </View>
     </View>
   );
