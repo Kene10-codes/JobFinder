@@ -5,7 +5,7 @@ import {Stack, useRouter} from 'expo-router';
 import {SIZES, COLORS, icons, images} from '../constants';
 import {Nearbyjobs, Popularjobs, ScreenHeaderBtn, Welcome} from '../components';
 
-export default function Page () {
+export default function Home () {
   const router = useRouter ();
   return (
     <SafeAreaView style={styles.container}>
@@ -17,14 +17,18 @@ export default function Page () {
             <ScreenHeaderBtn iconUrl={icons.menu} dimension="60%" />
           ),
           headerRight: () => (
-            <ScreenHeaderBtn iconUrl={icons.profile} dimension="100%" />
+            <ScreenHeaderBtn iconUrl={images.profile} dimension="100%" />
           ),
-          headerTitle: '',
+          headerTitle: 'Home',
         }}
       />
 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.main} />
+        <View style={styles.main}>
+          <Welcome />
+          <Nearbyjobs />
+          <Popularjobs />
+        </View>
 
       </ScrollView>
     </SafeAreaView>
