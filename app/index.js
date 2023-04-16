@@ -26,8 +26,9 @@ export default function Home () {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.main}>
           <Welcome />
-          <Nearbyjobs />
           <Popularjobs />
+          <Nearbyjobs />
+
         </View>
 
       </ScrollView>
