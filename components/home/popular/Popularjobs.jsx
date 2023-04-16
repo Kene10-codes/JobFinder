@@ -11,12 +11,16 @@ import {
 import styles from './popularjobs.style';
 import {SIZES, COLORS} from '../../../constants';
 
-// import popularJobCards from '../../../';
+import PopularJobCard
+  from '../../../components/common/cards/popular/PopularJobCard';
+import useFetch from '../../../hook/useFetch'
 
 const Popularjobs = () => {
   const router = useRouter ();
-  const isLoading = false;
-  const error = false;
+ const {error, isLoading, refetch, data} = useFetch("search", {
+  query: 'Mobile Developer', page: '1', num_pages: '1',
+ })
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -28,7 +32,15 @@ const Popularjobs = () => {
       <View style={styles.cardsContainer}>
         {isLoading
           ? <ActivityIndicator size="large" colors={COLORS.primary} />
-          : error ? <Text>Something is wrong</Text> : <FlatList />}
+          : error
+              ? <Text>Something is wrong</Text>
+              : <FlatList
+                  data={data}
+                  renderItem={({item}) => <PopularJobCard item={item} />}
+                  keyExtractor={item => item?.job_id}
+                  contentContainerStyle={{columnGap: SIZES.medium}}
+                  horizontal
+                />}
       </View>
     </View>
   );
