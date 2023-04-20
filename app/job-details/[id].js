@@ -33,7 +33,26 @@ const JobDetails = () => {
   const [refreshing, setRefreshing] = useState (false);
   const [activeTab, setActiveTab] = useState (tabs[0]);
 
-  onRefresh = () => {};
+  const onRefresh = useCallback (() => {
+    setRefreshing (true);
+    refetch ();
+    setRefreshing (false);
+  }, []);
+
+  const displayTabContent = () => {
+    switch(activeTab) {
+      case "Qualifications": 
+     return <Specifics title="Qualifications" points={data[0].job_highlights?.Qualifications ?? "N/A"} />
+      break;
+      case "About" : 
+      return <JobAbout info={data[0].job_description ?? "No data provided"} />
+      break;
+      case "Responsibilities":
+        break;
+
+    }
+  }
+
   return (
     <SafeAreaView style={{flex: 1, background: COLORS.lightWhite}}>
       <Stack.Screen
@@ -74,7 +93,12 @@ const JobDetails = () => {
                       companyName={data[0].employer_name}
                       location={data[0].job_country}
                     />
-                    <JobTabs tabs={tabs} setActiveTab={setActiveTab} />
+                    <JobTabs
+                      tabs={tabs}
+                      activeTab={activeTab}
+                      setActiveTab={setActiveTab}
+                    />
+                    {displayTabContent()}
                   </View>}
     </SafeAreaView>
   );
