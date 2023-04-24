@@ -20,7 +20,7 @@ import {
 } from '../../components';
 import useFetch from '../../hook/useFetch';
 
-const tabs = ['About', 'Qualifications', 'Responsibilites'];
+const tabs = ['About', 'Qualifications', 'Responsibilities'];
 
 const JobDetails = () => {
   const params = useSearchParams ();
@@ -42,12 +42,13 @@ const JobDetails = () => {
   const displayTabContent = () => {
     switch(activeTab) {
       case "Qualifications": 
-     return <Specifics title="Qualifications" points={data[0].job_highlights?.Qualifications ?? "N/A"} />
+     return <Specifics title="Qualifications" points={data[0].job_highlights?.Qualifications ?? ["N/A"]} />
       break;
       case "About" : 
       return <JobAbout info={data[0].job_description ?? "No data provided"} />
       break;
       case "Responsibilities":
+        return <Specifics title="Responsibilities" points={data[0].job_highlights?.Responsibilities ?? ["N/A"]} />
         break;
 
     }
@@ -79,7 +80,7 @@ const JobDetails = () => {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
-      />
+      >
       {isLoading
         ? <ActivityIndicator size="large" color={COLORS.primary} />
         : error
@@ -100,6 +101,8 @@ const JobDetails = () => {
                     />
                     {displayTabContent()}
                   </View>}
+                  </ScrollView>
+                  <JobFooter url={data[0]?.job_google_link ?? 'https://careers.google.com/jpbs/results'} />
     </SafeAreaView>
   );
 };

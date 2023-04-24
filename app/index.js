@@ -7,6 +7,7 @@ import {Nearbyjobs, Popularjobs, ScreenHeaderBtn, Welcome} from '../components';
 
 export default function Home () {
   const router = useRouter ();
+  const [searchTerm, setSearchTerm] = useState ('');
   return (
     <SafeAreaView style={styles.container}>
       <Stack.Screen
@@ -25,7 +26,15 @@ export default function Home () {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.main}>
-          <Welcome />
+          <Welcome
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            handleClick={() => {
+              if (searchTerm) {
+                router.push (`/search/${searchTerm}`);
+              }
+            }}
+          />
           <Popularjobs />
           <Nearbyjobs />
 
