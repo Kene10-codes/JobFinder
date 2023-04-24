@@ -16,7 +16,7 @@ const JobSearch = () => {
     const [searchLoader, setSearchLoader] = useState(false);
     const [searchError, setSearchError] = useState(null);
     const [page, setPage] = useState(1);
-a
+
     const handleSearch = async () => {
         setSearchLoader(true);
         setSearchResult([])
@@ -36,6 +36,7 @@ a
             };
 
             const response = await axios.request(options);
+            console.log(response + ">>>>>>>>")
             setSearchResult(response.data.data);
         } catch (error) {
             setSearchError(error);
